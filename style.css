@@ -1,0 +1,108 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    text-align: center;
+    margin-top: 50px;
+    background-color: #f3f3ed;
+    color: #fff;
+    padding: 10px;
+}
+
+#date-picker {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.date-button:hover {
+    background-color: #d8d8d1;
+}
+
+.date-button, .weather-card {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.date-button, .weather-card p {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.date-button {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #676766;
+    cursor: pointer;
+}
+
+.weather-card {
+    display: none;
+    width: 400px;
+    height: 500px;
+    font-size: 1.4em;
+    margin: 10px 15px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    text-align: center;
+}
+
+.temp {
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.temp span {
+    font-weight: bold;
+}
+
+.feels-like, .comfort-index, .comfort-description {
+    font-size: 0.8em;
+    margin-bottom: 3px;
+    font-weight: bold;
+}
+
+.wind, .pop {
+    font-size: 1em;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+#index-display {
+    display: none;
+    width: 400px;
+    height: 500px;
+    font-size: 45px;
+    margin: 10px 15px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    text-align: center;
+}
+
+#additional-info-container {
+    background-color: #edf6ff;
+    width: 90%;
+    margin: auto;
+    font-size: 18px;
+}
+
+#weather-title {
+    color: #676766;
+    font-size: 2.0em;
+}
+
+.date-button.selected {
+    background-color: #d8d8d1;
+}
