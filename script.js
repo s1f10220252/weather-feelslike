@@ -3,7 +3,7 @@ navigator.geolocation.getCurrentPosition(
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
         const API_KEY = 'ecd796a0eb988a173b4bf32772043737';
-        const API_URL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${API_KEY}&lang=ja&units=metric`;
+        const API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&APPID=${API_KEY}&lang=ja&units=metric`;
         const reverseGeocodeURL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${API_KEY}`;
 
         fetch(reverseGeocodeURL)
@@ -25,20 +25,23 @@ navigator.geolocation.getCurrentPosition(
                         const weatherDiv = document.getElementById('weather');
                         let html = '';
 
-                        for (let i = 0; i < data.daily.length; i++) {
-                            const date = new Date(data.daily[i].dt * 1000);
+                        // Filter data to get one forecast per day
+                        const dailyForecasts = data.list.filter(item =>
+                            item.dt_txt.includes('12:00:00')
+                        );
+
+                        for (let i = 0; i < dailyForecasts.length; i++) {
+                            const date = new Date(dailyForecasts[i].dt * 1000);
                             const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土'][date.getDay()];
-                            const weather = data.daily[i].weather[0].description;
-                            const icon = data.daily[i].weather[0].icon;
-                            const maxTemp = data.daily[i].temp.max;
-                            const minTemp = data.daily[i].temp.min;
-                            const feelsLike = data.daily[i].feels_like.day;
-                            const windSpeed = data.daily[i].wind_speed;
-                            const windDeg = data.daily[i].wind_deg;
+                            const weather = dailyForecasts[i].weather[0].description;
+                            const icon = dailyForecasts[i].weather[0].icon;
+                            const temp = dailyForecasts[i].main.temp;
+                            const feelsLike = dailyForecasts[i].main.feels_like;
+                            const windSpeed = dailyForecasts[i].wind.speed;
+                            const windDeg = dailyForecasts[i].wind.deg;
                             const windDirection = getWindDirection(windDeg);
-                            const pop = data.daily[i].pop;
+                            const pop = dailyForecasts[i].pop * 100; // Convert to percentage
                             const dateStr = `${date.getMonth() + 1}/${date.getDate()}(${dayOfWeek})`;
-                            const feelsLikeDay = data.daily[i].feels_like.day;
                             const comfortIndex = getComfortIndex(feelsLike);
                             const iconPath = getIconPath(comfortIndex);
 
@@ -47,7 +50,8 @@ navigator.geolocation.getCurrentPosition(
                                     <p class="date">${dateStr}</p>
                                     <img src="https://openweathermap.org/img/wn/${icon}.png" alt="${weather}">
                                     <p class="weather">${weather}</p>
-                                    <p class="temp">最高: ${maxTemp}℃ / 最低: ${minTemp}℃</p>
+                                    <p class="temp">気温: ${temp}℃</p>
+                                    <p class="feels-like">体感温度: ${feelsLike}℃</p>
                                     <p class="wind">風向き: ${windDirection} (${windDeg}°) / 風速: ${windSpeed}m/s</p>
                                     <p class="pop">降水確率: ${pop}%</p>
                                 </div>
@@ -57,9 +61,10 @@ navigator.geolocation.getCurrentPosition(
                         weatherDiv.innerHTML = html;
 
                         const dateButtons = document.getElementById('date-picker');
+                        dateButtons.innerHTML = ''; // Clear existing buttons
 
-                        for (let i = 0; i < 7; i++) {
-                            const date = new Date(data.daily[i].dt * 1000);
+                        for (let i = 0; i < dailyForecasts.length; i++) {
+                            const date = new Date(dailyForecasts[i].dt * 1000);
                             const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土'][date.getDay()];
                             const dateStr = `${date.getMonth() + 1}/${date.getDate()}(${dayOfWeek})`;
                             const button = document.createElement('button');
@@ -122,7 +127,7 @@ navigator.geolocation.getCurrentPosition(
     (error) => {
         console.error(error);
     }
-);  
+);
 
 function getWindDirection(degrees) {
     const directions = ['北', '北東', '東', '南東', '南', '南西', '西', '北西'];
