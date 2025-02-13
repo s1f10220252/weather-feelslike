@@ -1,108 +1,139 @@
-body {
-    font-family: 'Arial', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --background-color: #f4f6f7;
+    --text-color: #2c3e50;
+    --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
 }
 
 header {
+    background-color: var(--primary-color);
+    color: white;
     text-align: center;
-    margin-top: 50px;
-    background-color: #f3f3ed;
-    color: #fff;
-    padding: 10px;
+    padding: 1rem;
+    box-shadow: var(--card-shadow);
+}
+
+#weather-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
 }
 
 #date-picker {
-    margin: 20px 0;
-    text-align: center;
-}
-
-.date-button:hover {
-    background-color: #d8d8d1;
-}
-
-.date-button, .weather-card {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.date-button, .weather-card p {
-    font-weight: bold;
-    font-size: 1.2em;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
 }
 
 .date-button {
-    display: inline-block;
-    margin: 0 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #676766;
+    background-color: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.weather-card {
-    display: none;
-    width: 400px;
-    height: 500px;
-    font-size: 1.4em;
-    margin: 10px 15px;
-    padding: 10px;
-    border: 2px solid #ccc;
-    text-align: center;
-}
-
-.temp {
-    font-size: 1.1em;
-    margin-bottom: 5px;
-}
-
-.temp span {
-    font-weight: bold;
-}
-
-.feels-like, .comfort-index, .comfort-description {
-    font-size: 0.8em;
-    margin-bottom: 3px;
-    font-weight: bold;
-}
-
-.wind, .pop {
-    font-size: 1em;
-    margin-bottom: 5px;
-    font-weight: bold;
+.date-button.selected {
+    background-color: var(--primary-color);
+    color: white;
 }
 
 .container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    margin: 20px;
+    padding: 1rem;
+}
+
+#weather {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.weather-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    padding: 1rem;
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.weather-card:hover {
+    transform: scale(1.05);
+}
+
+.weather-card img {
+    width: 100px;
+    height: 100px;
+    margin: 0.5rem 0;
 }
 
 #index-display {
-    display: none;
-    width: 400px;
-    height: 500px;
-    font-size: 45px;
-    margin: 10px 15px;
-    padding: 10px;
-    border: 2px solid #ccc;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    padding: 1rem;
+    width: 250px;
+    margin-top: 1rem;
     text-align: center;
+    transition: transform 0.3s ease;
+}
+
+#index-display:hover {
+    transform: scale(1.05);
+}
+
+#index-display img {
+    width: 150px;
+    height: 150px;
+    margin: 1rem 0;
+    transition: transform 0.3s ease;
+}
+
+#index-display:hover {
+    transform: scale(1.05);
 }
 
 #additional-info-container {
-    background-color: #edf6ff;
-    width: 90%;
-    margin: auto;
-    font-size: 18px;
+    max-width: 600px;
+    margin: 1rem auto;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease;
 }
 
-#weather-title {
-    color: #676766;
-    font-size: 2.0em;
+#additional-info-container:hover {
+    transform: scale(1.05);
 }
 
-.date-button.selected {
-    background-color: #d8d8d1;
+@media (max-width: 768px) {
+    .weather-card {
+        width: 100%;
+    }
 }
